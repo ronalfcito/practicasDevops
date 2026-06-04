@@ -1,0 +1,23 @@
+name: Validacion Hola Mundo
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verificar-texto:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Descargar codigo del repositorio
+      uses: actions/checkout@v4
+
+    - name: Verificar que el archivo existe
+      run: |
+        if [ -f holamundo.txt ]; then
+          echo "¡El archivo holamundo.txt existe perfectamente!"
+          cat holamundo.txt
+        else
+          echo "Error: No se encuentra el archivo" && exit 1
+        fi
