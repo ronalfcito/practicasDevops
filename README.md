@@ -6,10 +6,10 @@ Este repositorio contiene una aplicación web desarrollada con Flask que permite
 
 La aplicación incluye:
 
-Un backend en Flask
-Una base de datos PostgreSQL
-Un flujo completo de Dockerización
-Un ejemplo sencillo de despliegue con contenedores
+- Un backend en Flask
+- Una base de datos PostgreSQL
+- Un flujo completo de Dockerización
+- Un ejemplo sencillo de despliegue con contenedores
 
 ---
 
@@ -19,15 +19,15 @@ Docker permite empaquetar una aplicación y todas sus dependencias en contenedor
 
 Esto es útil porque:
 
-No dependes de instalaciones locales complejas
-El entorno es reproducible
-El despliegue es más rápido y consistente
+- No dependes de instalaciones locales complejas
+- El entorno es reproducible
+- El despliegue es más rápido y consistente
 
 ---
 
 ## 2. Estructura del proyecto
 
-text
+```text
 nuevoProyectoDV/
 ├── app/
 │   └── app.py
@@ -36,14 +36,15 @@ nuevoProyectoDV/
 ├── requirements.txt
 ├── setup.py
 └── README.md
+```
 
 ### Archivos principales
 
-app/app.py: aplicación Flask con rutas para listar, crear y eliminar productos.
-Dockerfile: define cómo construir la imagen de la aplicación.
-docker-compose.yml: define los servicios web y base de datos.
-requirements.txt: dependencias de Python.
-setup.py: configuración del paquete Python.
+- app/app.py: aplicación Flask con rutas para listar, crear y eliminar productos.
+- Dockerfile: define cómo construir la imagen de la aplicación.
+- docker-compose.yml: define los servicios web y base de datos.
+- requirements.txt: dependencias de Python.
+- setup.py: configuración del paquete Python.
 
 ---
 
@@ -51,17 +52,17 @@ setup.py: configuración del paquete Python.
 
 La aplicación permite:
 
-Mostrar una página web con los productos registrados
-Crear nuevos productos
-Eliminar productos existentes
-Guardar los datos en PostgreSQL
+- Mostrar una página web con los productos registrados
+- Crear nuevos productos
+- Eliminar productos existentes
+- Guardar los datos en PostgreSQL
 
 La app se conecta a la base de datos usando variables de entorno como:
 
-DB_HOST
-DB_NAME
-DB_USER
-DB_PASSWORD
+- DB_HOST
+- DB_NAME
+- DB_USER
+- DB_PASSWORD
 
 ---
 
@@ -69,14 +70,15 @@ DB_PASSWORD
 
 Antes de ejecutar el proyecto necesitas tener instalado:
 
-Docker
-Docker Compose
+- Docker
+- Docker Compose
 
 Verifica que Docker esté funcionando con:
 
-bash
+```bash
 docker --version
 docker compose version
+```
 
 ---
 
@@ -84,22 +86,24 @@ docker compose version
 
 Desde la raíz del proyecto, ejecuta:
 
-bash
+```bash
 docker compose up --build
+```
 
 Este comando:
 
-Construye la imagen de la aplicación
-Levanta el contenedor web
-Levanta el contenedor de PostgreSQL
-Conecta ambos servicios automáticamente
+- Construye la imagen de la aplicación
+- Levanta el contenedor web
+- Levanta el contenedor de PostgreSQL
+- Conecta ambos servicios automáticamente
 
 ### Acceder a la aplicación
 
 Abre en el navegador:
 
-text
+```text
 http://localhost:5000
+```
 
 ---
 
@@ -109,15 +113,15 @@ El archivo docker-compose.yml define dos servicios:
 
 ### Servicio web
 
-Ejecuta la aplicación Flask
-Expone el puerto 5000
-Se conecta al servicio de base de datos
+- Ejecuta la aplicación Flask
+- Expone el puerto 5000
+- Se conecta al servicio de base de datos
 
 ### Servicio db
 
-Ejecuta PostgreSQL 15
-Mantiene los datos en un volumen persistente
-Expone el puerto 5432
+- Ejecuta PostgreSQL 15
+- Mantiene los datos en un volumen persistente
+- Expone el puerto 5432
 
 ---
 
@@ -127,7 +131,7 @@ Un Dockerfile es un archivo de texto que le indica a Docker cómo construir una 
 
 En este proyecto, el Dockerfile utiliza Python 3.10 slim como imagen base y realiza lo siguiente:
 
-dockerfile
+```dockerfile
 FROM python:3.10-slim
 
 WORKDIR /workspace
@@ -140,15 +144,16 @@ RUN pip install .
 EXPOSE 5000
 
 CMD ["ejecutar-crud"]
+```
 
 ### Explicación de las instrucciones
 
-FROM: indica la imagen base.
-WORKDIR: define el directorio de trabajo dentro del contenedor.
-COPY: copia los archivos del proyecto al contenedor.
-RUN: instala las dependencias.
-EXPOSE: documenta el puerto que usa la app.
-CMD: define el comando que se ejecuta al iniciar el contenedor.
+- FROM: indica la imagen base.
+- WORKDIR: define el directorio de trabajo dentro del contenedor.
+- COPY: copia los archivos del proyecto al contenedor.
+- RUN: instala las dependencias.
+- EXPOSE: documenta el puerto que usa la app.
+- CMD: define el comando que se ejecuta al iniciar el contenedor.
 
 ---
 
@@ -156,13 +161,15 @@ CMD: define el comando que se ejecuta al iniciar el contenedor.
 
 También puedes construir la imagen por separado:
 
-bash
+```bash
 docker build -t app-devops:1.0 .
+```
 
 Y luego ejecutarla:
 
-bash
+```bash
 docker run --rm -p 5000:5000 app-devops:1.0
+```
 
 ---
 
@@ -170,33 +177,39 @@ docker run --rm -p 5000:5000 app-devops:1.0
 
 ### Ver imágenes
 
-bash
+```bash
 docker images
+```
 
 ### Ver contenedores en ejecución
 
-bash
+```bash
 docker ps
+```
 
 ### Ver todos los contenedores
 
-bash
+```bash
 docker ps -a
+```
 
 ### Ver logs del contenedor web
 
-bash
+```bash
 docker compose logs web
+```
 
 ### Detener los servicios
 
-bash
+```bash
 docker compose down
+```
 
 ### Entrar al contenedor
 
-bash
+```bash
 docker compose exec web bash
+```
 
 ---
 
@@ -204,8 +217,9 @@ docker compose exec web bash
 
 Si quieres verificar que Docker funciona correctamente, puedes ejecutar:
 
-bash
+```bash
 docker run --rm hello-world
+```
 
 Esta imagen oficial sirve para comprobar que el motor de Docker está instalado y funcionando correctamente.
 
@@ -215,12 +229,13 @@ Esta imagen oficial sirve para comprobar que el motor de Docker está instalado 
 
 Para mejorar el tiempo de construcción y evitar copiar archivos innecesarios, es recomendable crear un archivo .dockerignore con contenido como este:
 
-text
+```text
 .git
 __pycache__
 *.pyc
 *.log
 .env
+```
 
 Esto ayuda a reducir el contexto de construcción y evita enviar archivos no necesarios al contenedor.
 
@@ -228,12 +243,12 @@ Esto ayuda a reducir el contexto de construcción y evita enviar archivos no nec
 
 ## 12. Buenas prácticas
 
-Mantener imágenes pequeñas y ligeras
-Usar variables de entorno para configuración sensible
-Etiquetar imágenes con versiones como 1.0, 1.1, etc.
-Usar Docker Compose para orquestar múltiples servicios
-No guardar credenciales directamente en el Dockerfile
-Limpiar contenedores y recursos no usados periódicamente
+- Mantener imágenes pequeñas y ligeras
+- Usar variables de entorno para configuración sensible
+- Etiquetar imágenes con versiones como 1.0, 1.1, etc.
+- Usar Docker Compose para orquestar múltiples servicios
+- No guardar credenciales directamente en el Dockerfile
+- Limpiar contenedores y recursos no usados periódicamente
 
 ---
 
@@ -242,9 +257,10 @@ Limpiar contenedores y recursos no usados periódicamente
 ### Puerto ocupado
 Si el puerto 5000 ya está en uso, cambia el mapeo en docker-compose.yml:
 
-yaml
+```yaml
 ports:
   - "5001:5000"
+```
 
 ### La base de datos aún no está lista
 Es posible que la app intente conectarse antes de que PostgreSQL esté completamente listo. En ese caso, espera unos segundos y vuelve a recargar la página.
@@ -256,9 +272,9 @@ Verifica que los archivos requirements.txt y setup.py estén correctos y que Doc
 
 ## 14. Recursos adicionales
 
-Documentación oficial de Docker: https://docs.docker.com
-Docker Hub: https://hub.docker.com
-Documentación de Docker Compose: https://docs.docker.com/compose/
+- Documentación oficial de Docker: https://docs.docker.com
+- Docker Hub: https://hub.docker.com
+- Documentación de Docker Compose: https://docs.docker.com/compose/
 
 ---
 
@@ -266,12 +282,14 @@ Documentación de Docker Compose: https://docs.docker.com/compose/
 
 Para levantar este proyecto con Docker:
 
-bash
+```bash
 docker compose up --build
+```
 
 Y para detenerlo:
 
-bash
+```bash
 docker compose down
+```
 
 Con esto tendrás la aplicación Flask y la base de datos PostgreSQL funcionando en contenedores de forma aislada y reproducible.
